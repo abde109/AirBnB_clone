@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 
-# This function prints hello world!
 def helloWorld():
-	print("Hello World!")
+    """
+    This function returns the string 'Hello World!'
+    """
+    return "Hello World!"
+
 
 helloWorld()
