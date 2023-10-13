@@ -1,4 +1,5 @@
-import uuid
+#!/usr/bin/python3
+from uuid import uuid4
 from datetime import datetime
 
 
@@ -7,13 +8,16 @@ class BaseModel:
 
     def __init__(self):
         """Initialize a new BaseModel instance."""
-        self.id = str(uuid.uuid4())
+
+        self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
 
     def __str__(self):
         """Return the string representation of the BaseModel."""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+
+        return "[{}] ({}) {}".format(
+            self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """Update the updated_at attribute with the current datetime."""
