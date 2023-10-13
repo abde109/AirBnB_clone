@@ -5,22 +5,16 @@ from datetime import datetime
 
 class TestBaseModel(unittest.TestCase):
     """Test the BaseModel class"""
-    # Create a new instance of BaseModel and
-    # verify that the id, created_at and updated_at attributes are set
-    # correctly.
 
-    # Create a new instance of BaseModel and
-    # verify that the id, created_at and updated_at
-    # attributes are set correctly.
-    # def test_instance_attributes(self):
-    #     base_model = BaseModel()
-    #     self.assertIsInstance(base_model.id, str)
-    #     self.assertIsInstance(base_model.created_at, datetime)
-    #     self.assertIsInstance(base_model.updated_at, datetime)
-
-    # Call the save() method on a BaseModel
-    # instance and verify that the updated_at attribute is updated with the
-    # current datetime.
+    def test_instance_attributes(self):
+        """
+        Create a new instance of BaseModel and verify that the
+        id, created_at and updated_at attributes are set correctly.
+        """
+        base_model = BaseModel()
+        self.assertIsInstance(base_model.id, str)
+        self.assertIsInstance(base_model.created_at, datetime)
+        self.assertIsInstance(base_model.updated_at, datetime)
 
     def test_save_method(self):
         """
@@ -33,10 +27,6 @@ class TestBaseModel(unittest.TestCase):
         base_model.save()
         new_updated_at = base_model.updated_at
         self.assertNotEqual(old_updated_at, new_updated_at)
-
-    # Call the to_dict() method on a BaseModel
-    # instance and verify that the returned dictionary
-    # contains the correct keys and values.
 
     def test_to_dict_method(self):
         """
@@ -56,10 +46,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(my_dict['updated_at'],
                          base_model.updated_at.isoformat())
 
-    # Create a new instance of BaseModel
-    # and manually set the id, created_at and updated_at
-    # attributes to invalid values. Verify that no exception is raised.
-
     def test_invalid_attributes(self):
         """
         Create a new instance of BaseModel
@@ -75,11 +61,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(base_model.created_at, '2022-01-01')
         self.assertEqual(base_model.updated_at, '2022-01-01')
 
-    # Call the to_dict() method on a BaseModel
-    # instance and manually modify the returned dictionary.
-    # Verify that creating a new BaseModel instance from
-    # the modified dictionary raises an exception.
-
     def test_modified_dict(self):
         """
         Call the to_dict() method on a BaseModel
@@ -92,9 +73,6 @@ class TestBaseModel(unittest.TestCase):
         my_dict['id'] = 'modified_id'
         with self.assertRaises(Exception):
             new_base_model = BaseModel(**my_dict)
-
-        # Create a new instance of a subclass of BaseModel and verify that the
-        # __str__() method returns the correct string representation.
 
     def test_str_method(self):
         """
