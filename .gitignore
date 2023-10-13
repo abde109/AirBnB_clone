@@ -1,1 +1,4 @@
-test_base_model_dict.py
+./_pycache_
+./.vscode
+
+*./_pycache_
