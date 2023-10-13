@@ -13,7 +13,8 @@ class FileStorage:
 
     def new(self, obj):
         """creates new object"""
-        self._objects[obj.__class__.__name__] = obj.id
+        self._objects[obj.__class__.__name__ +
+                      '.' + str(obj.id)] = obj.to_dict()
 
     def save(self):
         """save objects to output.json"""
