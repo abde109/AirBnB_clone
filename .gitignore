@@ -2,4 +2,4 @@ test_base_model_dict.py
 tests/__pycache__
 models/__pycache__
 __pycache__
-.vscode
+./.vscode
