@@ -1,6 +1,6 @@
 import unittest
 from models.base_model import BaseModel
-
+import datetime 
 
 class TestBaseModel(unittest.TestCase):
     """Test the BaseModel class"""
@@ -11,11 +11,11 @@ class TestBaseModel(unittest.TestCase):
     # Create a new instance of BaseModel and
     # verify that the id, created_at and updated_at
     # attributes are set correctly.
-    # def test_instance_attributes(self):
-    #     base_model = BaseModel()
-    #     self.assertIsInstance(base_model.id, str)
-    #     self.assertIsInstance(base_model.created_at, datetime)
-    #     self.assertIsInstance(base_model.updated_at, datetime)
+    def test_instance_attributes(self):
+        base_model = BaseModel()
+        self.assertIsInstance(base_model.id, str)
+        self.assertIsInstance(base_model.created_at, datetime)
+        self.assertIsInstance(base_model.updated_at, datetime)
 
     # Call the save() method on a BaseModel
     # instance and verify that the updated_at attribute is updated with the
