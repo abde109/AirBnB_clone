@@ -75,7 +75,6 @@ class HBNBCommand(cmd.Cmd):
                 return
         print("** no instance found **")
 
-
     def do_destroy(self, args):
         """remove instance of model based on id"""
         instances = FileStorage()
