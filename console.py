@@ -116,8 +116,8 @@ class HBNBCommand(cmd.Cmd):
                 id = identifier.split('.')
                 if (id[0] == tofind[0]):
                     result.append(
-                        str(BaseModel(
-                            **instances.__objects[identifier])))
+                        str(instances.all()[identifier])
+)
         print(result)
 
     def do_update(self, args):
@@ -145,20 +145,20 @@ class HBNBCommand(cmd.Cmd):
             value = tofind[3]
             if (id[0] == tofind[0] and id[1] == tofind[1]):
                 if value.startswith('"') and value.endswith('"'):
-                    instances.__objects[identifier][tofind[2]] = eval(
+                    instances.all()[identifier][tofind[2]] = eval(
                         tofind[3])
                     print("is string")
                 else:
                     try:
-                        instances.__objects[identifier][tofind[2]] = int(value)
+                        instances.all()[identifier][tofind[2]] = int(value)
                         print("is int")
                     except ValueError:
                         try:
-                            instances.__objects[identifier][tofind[2]] = float(
+                            instances.all()[identifier][tofind[2]] = float(
                                 value)
                             print("is float")
                         except ValueError:
-                            instances.__objects[identifier][tofind[2]] = value
+                            instances.all()[identifier][tofind[2]] = value
                 instances.save()
                 return
         print("** no instance found **")
