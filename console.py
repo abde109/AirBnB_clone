@@ -142,24 +142,23 @@ class HBNBCommand(cmd.Cmd):
             return
         for identifier in list(instances.all()):
             id = identifier.split('.')
-            value = tofind[3]
-            if (id[0] == tofind[0] and id[1] == tofind[1]):
-                if value.startswith('"') and value.endswith('"'):
-                    setattr(instances.all()[identifier], tofind[2], eval(tofind[3]))
-                    print("is string")
-                else:
+            value = tofind[3].strip('"')
+
+            if id[0] == tofind[0] and id[1] == tofind[1]:
+                obj = instances.all()[identifier]
+
+                try:
+                    value = int(value)
+                except ValueError:
                     try:
-                        instances.all()[identifier][tofind[2]] = int(value)
-                        print("is int")
+                        value = float(value)
                     except ValueError:
-                        try:
-                            instances.all()[identifier][tofind[2]] = float(
-                                value)
-                            print("is float")
-                        except ValueError:
-                            instances.all()[identifier][tofind[2]] = value
+                        pass
+
+                setattr(obj, tofind[2], value)
                 instances.save()
                 return
+
         print("** no instance found **")
 
 
