@@ -15,8 +15,8 @@ class FileStorage:
 
     def new(self, obj):
         """creates new object"""
-        self.__objects[obj.__class__.__name__ +
-                       '.' + str(obj.id)] = obj.to_dict()
+        attr = "{}.{}".format(type(obj).__name__, obj.id)
+        self.__objects[attr] = obj.to_dict()
 
     def save(self):
         """save objects to output.json"""
@@ -38,5 +38,5 @@ class FileStorage:
         with f:
             data = f.read()
         json_decode = loads(data)
-        self.___objects = json_decode
+        self.__objects = json_decode
         f.close()
