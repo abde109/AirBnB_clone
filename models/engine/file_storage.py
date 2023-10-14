@@ -6,7 +6,7 @@ from os.path import exists
 
 class FileStorage:
     """"Storage class, allows for crud of objects"""
-    __file_path = "output.json"
+    __file_path = "file.json"
     _objects = {}
 
     def all(self):

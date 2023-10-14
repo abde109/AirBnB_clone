@@ -64,7 +64,7 @@ class TestFileStorage_methods(unittest.TestCase):
 
         models.storage.save()
         save_text = ""
-        with open("output.json", "r") as f:
+        with open("file.json", "r") as f:
             save_text = f.read()
             self.assertIn("BaseModel." + bm.id, save_text)
 
