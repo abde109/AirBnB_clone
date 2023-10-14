@@ -8,6 +8,7 @@ from uuid import uuid4
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """BaseModel class for creating and managing new instances."""
 
@@ -27,7 +28,12 @@ class BaseModel:
 
     def __str__(self):
         """Return the string representation of the BaseModel."""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        def __str__(self):
+        class_name = self.__class__.__name__
+        obj_id = self.id
+        obj_dict = self.__dict__
+        return "[{}] ({}) {}".format(class_name, obj_id, obj_dict)
+
 
     def save(self):
         """Update the updated_at attribute with the current datetime."""
