@@ -48,10 +48,10 @@ class HBNBCommand(cmd.Cmd):
         print("** class doesn't exist **")
 
     def do_show(self, args):
+        """shows instance of base based on id"""
 
         instances = FileStorage()
         instances.reload()
-        """shows instance of base based on id"""
         if (len(args) == 0):
             print("** class name missing **")
             return
@@ -70,9 +70,9 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found *")
 
     def do_destroy(self, args):
+        """remove instance of base based on id"""
         instances = FileStorage()
         instances.reload()
-        """remove instance of base based on id"""
         if (len(args) == 0):
             print("** class name missing **")
             return
@@ -112,9 +112,9 @@ class HBNBCommand(cmd.Cmd):
                     print(instances._objects[identifier])
 
     def do_update(self, args):
+        """update instance attribute of model based on id"""
         instances = FileStorage()
         instances.reload()
-        """update instance attribute of model based on id"""
         if (len(args) == 0):
             print("** class name missing **")
             return
