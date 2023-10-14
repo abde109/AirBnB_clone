@@ -11,7 +11,6 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize a new BaseModel instance."""
         if kwargs:
-
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
                     value = datetime.fromisoformat(value)
@@ -33,6 +32,7 @@ class BaseModel:
     def save(self):
         """Update the updated_at attribute with the current datetime."""
         self.updated_at = datetime.now()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):

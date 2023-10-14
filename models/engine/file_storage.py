@@ -2,6 +2,8 @@
 """my very first custom backend orm :)"""
 from json import loads, dumps
 from os.path import exists
+from models.user import User
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -28,6 +30,7 @@ class FileStorage:
         f.close()
 
     def reload(self):
+        current_classes = {'BaseModel': BaseModel, 'User': User}
         """reads from output.json to load objects"""
         if not exists(self.__file_path):
             g = open(self.__file_path, "w")

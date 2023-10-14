@@ -3,6 +3,7 @@
 import requests
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 from json import dumps
 
@@ -13,7 +14,7 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb) '
-    models = {'BaseModel'}
+    models = {'BaseModel': BaseModel, 'User': User}
 
     def do_quit(self, args):
         """Quits the command interpreter."""
@@ -25,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """An empty line + ENTER shouldn’t execute anything."""
+        """An empty line + ENTER shouldn't execute anything."""
         pass
 
     def do_help(self, args):
@@ -41,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         if not (args):
             print("** class name missing **")
             return
-        if (args == 'BaseModel'):
+        if (args in self.models.keys()):
             instance = eval(args)()
             instance.save()
             print(instance.id)
@@ -66,19 +67,20 @@ class HBNBCommand(cmd.Cmd):
         for identifier in list(instances.all()):
             id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
-                print(BaseModel(**instances.__objects[identifier]))
+
+                print(eval(id[0])(**instances.all()[identifier]))
                 return
-        print("** no instance found *")
+        print("** no instance found **")
 
     def do_destroy(self, args):
-        """remove instance of base based on id"""
+        """remove instance of model based on id"""
         instances = FileStorage()
         instances.reload()
         if (len(args) == 0):
             print("** class name missing **")
             return
         tofind = args.split(' ')
-        if (tofind[0] not in self.models):
+        if (tofind[0] not in self.models.keys()):
             print("** class doesn't exist **")
             return
         if (len(tofind) == 1):
@@ -87,10 +89,10 @@ class HBNBCommand(cmd.Cmd):
         for identifier in list(instances.all()):
             id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
-                instances.__objects.pop(identifier)
+                instances.all().pop(identifier)
                 instances.save()
                 return
-            print("** no instance found *")
+        print("** no instance found **")
 
     def do_all(self, args):
         """shows all instances with or without model specifier"""
@@ -100,9 +102,10 @@ class HBNBCommand(cmd.Cmd):
         result = []
         if (len(args) == 0):
             for identifier in list(instances.all()):
-                result.append(
-                    str(BaseModel(
-                        **instances.__objects[identifier])))
+                splitID = identifier.split('.')
+                if (splitID[0] in self.models.keys()):
+                    result.append(
+                        str(eval(splitID[0])(**instances.all()[identifier])))
 
         else:
             tofind = args.split(' ')
@@ -159,7 +162,7 @@ class HBNBCommand(cmd.Cmd):
                             instances.__objects[identifier][tofind[2]] = value
                 instances.save()
                 return
-        print("** no instance found *")
+        print("** no instance found **")
 
 
 if __name__ == '__main__':
