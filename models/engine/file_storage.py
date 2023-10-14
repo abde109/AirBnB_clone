@@ -1,45 +1,42 @@
 #!/usr/bin/python3
-"""my very first custom backend orm :)"""
-from json import loads, dumps
-from os.path import exists
-from models.user import User
-from models.base_model import BaseModel
+"""
+This module contains the FileStorage class for managing storage of objects.
+"""
 
+from json import load, dump
+from os.path import exists
 
 class FileStorage:
-    """"Storage class, allows for crud of objects"""
+    """FileStorage class for serializing and deserializing instances."""
+
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
-        """returns all stored objects"""
+        """Return all stored objects."""
         return self.__objects
 
     def new(self, obj):
-        """creates new object"""
-        attr = "{}.{}".format(type(obj).__name__, obj.id)
-        self.__objects[attr] = obj.to_dict()
+        """Create new object."""
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        self.__objects[key] = obj
 
     def save(self):
-        """save objects to output.json"""
-        f = open(self.__file_path, "w")
+        """Serialize objects to the JSON file."""
+        save_dict = {}
+        for key, obj in self.__objects.items():
+            save_dict[key] = obj.to_dict()
 
-        json_object = dumps(self.__objects)
-        with f:
-            f.write(json_object)
-        f.close()
+        with open(self.__file_path, "w") as f:
+            dump(save_dict, f)
 
     def reload(self):
-        current_classes = {'BaseModel': BaseModel, 'User': User}
-        """reads from output.json to load objects"""
-        if not exists(self.__file_path):
-            g = open(self.__file_path, "w")
-            g.write("{}")
-            g.close()
-        f = open(self.__file_path, "r")
+        """Deserialize objects from the JSON file."""
+        if exists(self.__file_path):
+            with open(self.__file_path, "r") as f:
+                loaded_dict = load(f)
 
-        with f:
-            data = f.read()
-        json_decode = loads(data)
-        self.__objects = json_decode
-        f.close()
+            for key, obj_dict in loaded_dict.items():
+                class_name = obj_dict["__class__"]
+                if class_name in models.__dict__:
+                    self.__objects[key] = models.__dict__[class_name](**obj_dict)
