@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """
-This module defines the FileStorage class for handling storage of objects.
+This module contains the FileStorage class for managing the storage
+of objects to a JSON file and reloading objects from the JSON file.
 """
-
 from json import loads, dumps
 from os.path import exists
 from models.user import User
@@ -10,43 +10,41 @@ from models.base_model import BaseModel
 
 class FileStorage:
     """
-    FileStorage class for serializing and deserializing instances.
+    FileStorage class, allows for CRUD (Create, Read, Update, Delete) operations of objects.
     """
-    
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
         """
-        Return all stored objects.
+        Returns all stored objects as a dictionary.
         """
         return self.__objects
 
     def new(self, obj):
         """
-        Create a new object.
+        Creates a new object and adds it to the __objects dictionary.
         """
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj.to_dict()
+        attr = "{}.{}".format(type(obj).__name__, obj.id)
+        self.__objects[attr] = obj.to_dict()
 
     def save(self):
         """
-        Serialize objects to the JSON file.
+        Serializes objects to a JSON file.
         """
         with open(self.__file_path, "w") as f:
-            dumps(self.__objects, f)
+            json_object = dumps(self.__objects)
+            f.write(json_object)
 
     def reload(self):
         """
-        Deserialize objects from the JSON file.
+        Deserializes objects from a JSON file and loads them into __objects.
         """
-        if exists(self.__file_path):
-            with open(self.__file_path, "r") as f:
-                self.__objects = loads(f.read())
-
-            current_classes = {'BaseModel': BaseModel, 'User': User}
-
-            for key, obj_dict in self.__objects.items():
-                class_name = obj_dict["__class__"]
-                if class_name in current_classes:
-                    self.__objects[key] = current_classes[class_name](**obj_dict)
+        current_classes = {'BaseModel': BaseModel, 'User': User}
+        if not exists(self.__file_path):
+            with open(self.__file_path, "w") as g:
+                g.write("{}")
+        with open(self.__file_path, "r") as f:
+            data = f.read()
+        json_decode = loads(data)
+        self.__objects = json_decode
