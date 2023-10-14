@@ -67,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
             id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
 
-                print(eval(id[0])(**instances.all()[identifier]))
+                print(instances.all()[identifier])
                 return
         print("** no instance found **")
 
@@ -145,8 +145,7 @@ class HBNBCommand(cmd.Cmd):
             value = tofind[3]
             if (id[0] == tofind[0] and id[1] == tofind[1]):
                 if value.startswith('"') and value.endswith('"'):
-                    instances.all()[identifier][tofind[2]] = eval(
-                        tofind[3])
+                    setattr(instances.all()[identifier], tofind[2], eval(tofind[3]))
                     print("is string")
                 else:
                     try:
