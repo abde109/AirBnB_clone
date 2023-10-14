@@ -66,12 +66,8 @@ class HBNBCommand(cmd.Cmd):
         for identifier in list(instances.all()):
             id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
-                obj = instances.all()[identifier]
-                obj_dict = obj.__dict__
-                ordered_keys = ['first_name', 'id', 'created_at', 'updated_at']
-                ordered_dict = {k: obj_dict[k] for k in ordered_keys if k in obj_dict}
 
-                print("[{}] ({}) {}".format(id[0], id[1], ordered_dict))
+                print(instances.all()[identifier])
                 return
         print("** no instance found **")
 
