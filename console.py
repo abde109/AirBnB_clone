@@ -99,12 +99,12 @@ class HBNBCommand(cmd.Cmd):
         instances = FileStorage()
         instances.reload()
         result = []
-        if len(args) == 0:
+        if (len(args) == 0):
             for identifier in list(instances.all()):
                 splitID = identifier.split('.')
-                if splitID[0] in self.models.keys():
-                    temp_instance = eval(splitID[0])(**instances.all()[identifier])
-                    result.append(str(temp_instance))
+                if (splitID[0] in self.models.keys()):
+                    result.append(
+                        str(eval(splitID[0])(**instances.all()[identifier])))
 
         else:
             tofind = args.split(' ')
@@ -121,22 +121,42 @@ class HBNBCommand(cmd.Cmd):
         print(result)
 
     def do_update(self, args):
-        """Update instance attribute of model based on id."""
+        """update instance attribute of model based on id"""
         instances = FileStorage()
         instances.reload()
-        # ... (rest of your existing code for do_update)
+        if (len(args) == 0):
+            print("** class name missing **")
+            return
+        tofind = args.split(' ')
+        if (tofind[0] not in self.models):
+            print("** class doesn't exist **")
+            return
+        if (len(tofind) == 1):
+            print("** instance id missing **")
+            return
+        if (len(tofind) == 2):
+            print("** attribute name missing **")
+            return
+        if (len(tofind) == 3):
+            print("** value missing **")
+            return
         for identifier in list(instances.all()):
             id = identifier.split('.')
             value = tofind[3]
-            if id[0] == tofind[0] and id[1] == tofind[1]:
+            if (id[0] == tofind[0] and id[1] == tofind[1]):
                 if value.startswith('"') and value.endswith('"'):
-                    instances.__objects[identifier][tofind[2]] = eval(value)
+                    instances.__objects[identifier][tofind[2]] = eval(
+                        tofind[3])
+                    print("is string")
                 else:
                     try:
                         instances.__objects[identifier][tofind[2]] = int(value)
+                        print("is int")
                     except ValueError:
                         try:
-                            instances.__objects[identifier][tofind[2]] = float(value)
+                            instances.__objects[identifier][tofind[2]] = float(
+                                value)
+                            print("is float")
                         except ValueError:
                             instances.__objects[identifier][tofind[2]] = value
                 instances.save()
