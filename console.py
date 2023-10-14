@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
         for identifier in list(instances.all()):
             id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
-                print(BaseModel(**instances._objects[identifier]))
+                print(BaseModel(**instances.__objects[identifier]))
                 return
         print("** no instance found *")
 
@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
         for identifier in list(instances.all()):
             id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
-                instances._objects.pop(identifier)
+                instances.__objects.pop(identifier)
                 instances.save()
                 return
             print("** no instance found *")
@@ -102,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
             for identifier in list(instances.all()):
                 result.append(
                     str(BaseModel(
-                        **instances._objects[identifier])))
+                        **instances.__objects[identifier])))
 
         else:
             tofind = args.split(' ')
@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
                 if (id[0] == tofind[0]):
                     result.append(
                         str(BaseModel(
-                            **instances._objects[identifier])))
+                            **instances.__objects[identifier])))
         print(result)
 
     def do_update(self, args):
@@ -143,19 +143,20 @@ class HBNBCommand(cmd.Cmd):
             value = tofind[3]
             if (id[0] == tofind[0] and id[1] == tofind[1]):
                 if value.startswith('"') and value.endswith('"'):
-                    instances._objects[identifier][tofind[2]] = eval(tofind[3])
+                    instances.__objects[identifier][tofind[2]] = eval(
+                        tofind[3])
                     print("is string")
                 else:
                     try:
-                        instances._objects[identifier][tofind[2]] = int(value)
+                        instances.__objects[identifier][tofind[2]] = int(value)
                         print("is int")
                     except ValueError:
                         try:
-                            instances._objects[identifier][tofind[2]] = float(
+                            instances.__objects[identifier][tofind[2]] = float(
                                 value)
                             print("is float")
                         except ValueError:
-                            instances._objects[identifier][tofind[2]] = value
+                            instances.__objects[identifier][tofind[2]] = value
                 instances.save()
                 return
         print("** no instance found *")
