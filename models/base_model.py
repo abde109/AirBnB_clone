@@ -1,8 +1,4 @@
 #!/usr/bin/python3
-"""
-This module contains the BaseModel class which serves as the base for other
-model classes in this project.
-"""
 
 from uuid import uuid4
 from datetime import datetime
@@ -10,7 +6,7 @@ import models
 
 
 class BaseModel:
-    """BaseModel class for creating and managing new instances."""
+    """This is the BaseModel class"""
 
     def __init__(self, *args, **kwargs):
         """Initialize a new BaseModel instance."""
@@ -28,12 +24,10 @@ class BaseModel:
 
     def __str__(self):
         """Return the string representation of the BaseModel."""
-        def __str__(self):
-        class_name = self.__class__.__name__
-        obj_id = self.id
-        obj_dict = self.__dict__
-        return "[{}] ({}) {}".format(class_name, obj_id, obj_dict)
-
+        classname = "[{}] ".format(self.__class__.__name__)
+        id = "({}) ".format(self.id)
+        dict = "{}".format(self.__dict__)
+        return classname + id + dict
 
     def save(self):
         """Update the updated_at attribute with the current datetime."""
