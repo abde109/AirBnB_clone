@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+""" cli using cmd.Cmd module"""
+
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage

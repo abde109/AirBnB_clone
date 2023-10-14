@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""What a beautiful code"""
 
 from models.engine.file_storage import FileStorage
 
