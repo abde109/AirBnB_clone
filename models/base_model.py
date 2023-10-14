@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-""" the base model"""
 
 from uuid import uuid4
 from datetime import datetime
@@ -11,8 +10,8 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Initialize a new BaseModel instance."""
-
         if kwargs:
+
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")

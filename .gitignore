@@ -5,3 +5,6 @@
 *~
 *.swp
 **/__pycache__
+**.json
+*.json
+output.json
