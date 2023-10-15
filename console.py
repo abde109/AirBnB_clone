@@ -116,8 +116,11 @@ class HBNBCommand(cmd.Cmd):
             for identifier in list(instances.all()):
                 splitID = identifier.split('.')
                 if (splitID[0] in self.models.keys()):
+                    dict = eval(
+                        splitID[0])(
+                        **instances.all()[identifier].to_dict())
                     result.append(
-                        str(eval(splitID[0])(**instances.all()[identifier].to_dict())))
+                        str(dict))
 
         else:
             tofind = args.split(' ')

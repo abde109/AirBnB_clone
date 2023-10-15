@@ -1,4 +1,4 @@
-
+#!/usr/bin/python3
 from models.place import Place
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
@@ -8,14 +8,18 @@ import models
 
 class TestPlace(unittest.TestCase):
 
-    # create a new instance of Place and verify that it is a subclass of
-    # BaseModel
+    """ create a new instance of Place and verify
+    that it is a subclass of
+    BaseModel"""
+
     def test_new_instance_is_subclass_of_BaseModel(self):
         place = Place()
         self.assertIsInstance(place, BaseModel)
 
-    # set attributes of a Place instance and verify that they are saved
-    # correctly
+    """set attributes of a Place instance and
+    verify that they are saved
+    correctly"""
+
     def test_set_attributes_are_saved_correctly(self):
         place = Place()
         place.city_id = "123"
@@ -42,8 +46,10 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.longitude, -122.4194)
         self.assertEqual(place.amenity_ids, ["1", "2", "3"])
 
-    # call save() on a Place instance and verify that updated_at is updated
-    # and the instance is saved to storage
+    """call save() on a Place instance and verify
+    that updated_at is updated
+    and the instance is saved to storage"""
+
     def test_save_updates_updated_at_and_saves_instance_to_storage(self):
         place = Place()
         original_updated_at = place.updated_at
@@ -53,8 +59,11 @@ class TestPlace(unittest.TestCase):
         self.assertNotEqual(place.updated_at, original_updated_at)
         self.assertIn(place, models.storage.all().values())
 
-    # create a new Place instance with no arguments and verify that the id,
-    # created_at, and updated_at attributes are set correctly
+    """create a new Place instance with no
+    arguments and verify that the id,
+    created_at, and updated_at attributes
+    are set correctly"""
+
     def test_new_instance_with_no_arguments_sets_attributes_correctly(self):
         place = Place()
 

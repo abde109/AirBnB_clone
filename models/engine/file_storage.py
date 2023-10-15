@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""FileStorage class handles the serialization and deserialization of instances"""
+"""FileStorage class handles the serialization
+and deserialization of instances"""
 from json import loads, dumps
 from os.path import exists
 from models.user import User
