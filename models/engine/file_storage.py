@@ -30,8 +30,8 @@ class FileStorage:
         serialized_objects = {}
         for key, obj in self.__objects.items():
             # Call to_dict() to serialize
-            serialized_objects[key] = obj.to_dict()
 
+            serialized_objects[key] = obj.to_dict()
         with open(self.__file_path, "w") as f:
             json_object = dumps(serialized_objects)
             f.write(json_object)

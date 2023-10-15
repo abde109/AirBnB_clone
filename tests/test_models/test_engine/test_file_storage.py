@@ -47,7 +47,7 @@ class TestFileStorage_methods(unittest.TestCase):
         models.storage.new(bm)
         models.storage.save()
         self.assertIn("BaseModel." + bm.id, models.storage.all().keys())
-        self.assertIn(bm.to_dict(), models.storage.all().values())
+        self.assertIn(bm, models.storage.all().values())
 
     def test_new_with_args(self):
         with self.assertRaises(TypeError):
