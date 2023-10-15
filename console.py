@@ -201,30 +201,40 @@ class HBNBCommand(cmd.Cmd):
                 self.do_destroy(f"{class_name} {action_args}")
             elif action == "update":
                 try:
-                    if "{" in action_args: 
-                        id, update_dict_str = [arg.strip(' "')
-                                            for arg in action_args.split(',', 1)]
-                        update_dict = ast.literal_eval(update_dict_str)  # Convert string to dictionary
-                        self.do_update_dict(f"{class_name} {id} {update_dict}")
+                    if "{" in action_args:
+                        id, update_dict_str = [
+                            arg.strip(' "')
+                            for arg in action_args.split(',', 1)
+                        ]
+                        update_dict = ast.literal_eval(update_dict_str)
+                        update_command = f"{class_name} {id} {update_dict}"
+                        self.do_update_dict(update_command)
                     else:
-                        id, attribute_name, attribute_value = [arg.strip(' "')
-                                                            for arg in action_args.split(',')]
-                        self.do_update(f"{class_name} {id} {attribute_name} {attribute_value}")
+                        id, attribute_name, attribute_value = [
+                            arg.strip(' "') for arg in action_args.split(',')
+                        ]
+                        update_command = (
+                            f"{class_name} {id} "
+                            f"{attribute_name} {attribute_value}"
+                        )
+                        self.do_update(update_command)
                 except ValueError:
                     print("** Invalid syntax **")
 
     def do_update_dict(self, args):
-        """Updates an instance based on its ID and a dictionary of attributes."""
+        """Updates an instance based on its ID ."""
         instances = FileStorage()
         instances.reload()
         args_list = args.split(' ', 2)
-        class_name, instance_id, update_dict = args_list[0], args_list[1], eval(args_list[2])
+        class_name = args_list[0]
+        instance_id = args_list[1]
+        update_dict = eval(args_list[2])
 
         instance_key = f"{class_name}.{instance_id}"
         if instance_key not in instances.all():
             print("** no instance found **")
             return
-        
+
         instance = instances.all()[instance_key]
         for key, value in update_dict.items():
             if key not in ['id', 'created_at', 'updated_at']:
