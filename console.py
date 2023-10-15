@@ -207,6 +207,9 @@ class HBNBCommand(cmd.Cmd):
             elif action == "show":
                 action_args = action_args.strip('"')
                 self.do_show(f"{class_name} {action_args}")
+            elif action == "destroy":
+                action_args = action_args.strip('"')
+                self.do_destroy(f"{class_name} {action_args}")
 
 
     def do_count(self, class_name):
