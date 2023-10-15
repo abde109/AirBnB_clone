@@ -176,21 +176,9 @@ class HBNBCommand(cmd.Cmd):
                 return
 
         print("** no instance found **")
-        
-    def default(self, line):
-        """Method called on an input line when the command prefix is not recognized."""
-        args = line.split('.')
-        if len(args) != 2:
-            print("** Unknown syntax: {}".format(line))
-            return
-
-        class_name, action = args
-        if class_name in self.models.keys():
-            if action == "all()":
-                self.do_all(class_name)
 
     def default(self, line):
-        """Method called on an input line when the command prefix is not recognized."""
+        """Method called on an input line ."""
         args = line.split('.')
         if len(args) != 2:
             print("** Unknown syntax: {}".format(line))
@@ -210,7 +198,6 @@ class HBNBCommand(cmd.Cmd):
             elif action == "destroy":
                 action_args = action_args.strip('"')
                 self.do_destroy(f"{class_name} {action_args}")
-
 
     def do_count(self, class_name):
         """Count the number of instances of a given class."""
