@@ -176,6 +176,18 @@ class HBNBCommand(cmd.Cmd):
                 return
 
         print("** no instance found **")
+        
+    def default(self, line):
+        """Method called on an input line when the command prefix is not recognized."""
+        args = line.split('.')
+        if len(args) != 2:
+            print("** Unknown syntax: {}".format(line))
+            return
+
+        class_name, action = args
+        if class_name in self.models.keys():
+            if action == "all()":
+                self.do_all(class_name)
 
 
 if __name__ == '__main__':
