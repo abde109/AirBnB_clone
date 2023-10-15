@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module for test Amenity class"""
 from models.base_model import BaseModel
 from models.amenity import Amenity
 import unittest

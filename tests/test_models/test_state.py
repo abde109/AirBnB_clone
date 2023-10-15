@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-
+"""Module for test State class"""
 from models.base_model import BaseModel
 from models.state import State
 

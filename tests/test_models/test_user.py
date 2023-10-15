@@ -1,8 +1,7 @@
 #!/usr/bin/python3
+"""Module for test User class"""
 from models.base_model import BaseModel
 from models.user import User
-
-
 import unittest
 
 

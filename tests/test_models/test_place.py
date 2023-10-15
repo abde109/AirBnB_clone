@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module for test Place class"""
 from models.place import Place
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
