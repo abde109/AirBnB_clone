@@ -1,8 +1,13 @@
 #!/usr/bin/python3
 """ cli using cmd.Cmd module"""
 import cmd
-from models.base_model import BaseModel
 from models.user import User
+from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.place import Place
 from models.engine.file_storage import FileStorage
 from json import dumps
 
@@ -13,7 +18,15 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = '(hbnb) '
-    models = {'BaseModel': BaseModel, 'User': User}
+    models = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'Amenity': Amenity,
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State
+    }
 
     def do_quit(self, args):
         """Quits the command interpreter."""
@@ -104,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
                 splitID = identifier.split('.')
                 if (splitID[0] in self.models.keys()):
                     result.append(
-                        str(eval(splitID[0])(**instances.all()[identifier])))
+                        str(eval(splitID[0])(**instances.all()[identifier].to_dict())))
 
         else:
             tofind = args.split(' ')
@@ -117,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
                 if (id[0] == tofind[0]):
                     result.append(
                         str(instances.all()[identifier])
-)
+                    )
         print(result)
 
     def do_update(self, args):

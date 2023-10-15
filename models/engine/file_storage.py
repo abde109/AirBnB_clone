@@ -2,8 +2,14 @@
 """FileStorage class handles the serialization and deserialization of instances"""
 from json import loads, dumps
 from os.path import exists
-from ..user import User  # Modified import
-from ..base_model import BaseModel  # Modified import
+from models.user import User
+from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.place import Place
+
 
 class FileStorage:
     """Storage class, allows for CRUD operations on objects"""
@@ -23,7 +29,8 @@ class FileStorage:
         """Save objects to output.json"""
         serialized_objects = {}
         for key, obj in self.__objects.items():
-            serialized_objects[key] = obj.to_dict()  # Call to_dict() to serialize
+            # Call to_dict() to serialize
+            serialized_objects[key] = obj.to_dict()
 
         with open(self.__file_path, "w") as f:
             json_object = dumps(serialized_objects)
@@ -31,7 +38,16 @@ class FileStorage:
 
     def reload(self):
         """Reads from output.json to load objects"""
-        current_classes = {'BaseModel': BaseModel, 'User': User}
+        current_classes = {
+            'BaseModel': BaseModel,
+            'User': User,
+            'Amenity': Amenity,
+            'City': City,
+            'Place': Place,
+            'Review': Review,
+            'State': State
+        }
+
         if not exists(self.__file_path):
             with open(self.__file_path, "w") as g:
                 g.write("{}")
@@ -45,4 +61,3 @@ class FileStorage:
             class_name = value['__class__']
             if class_name in current_classes:
                 self.__objects[key] = current_classes[class_name](**value)
-
