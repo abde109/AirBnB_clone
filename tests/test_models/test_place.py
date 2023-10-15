@@ -48,7 +48,7 @@ class TestPlace(unittest.TestCase):
         """create a new place with empty attributes """
         place = Place()
         self.assertEqual(place.name, "")
-        self.assertEqual(place.amenity_ids, "")
+        self.assertEqual(place.amenity_ids, [])
         self.assertEqual(place.city_id, "")
         self.assertEqual(place.max_guest, 0)
         self.assertEqual(place.price_by_night, 0)
