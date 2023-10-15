@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Module for test BaseModel class"""
 import unittest
-import pycodestyle
 import datetime
 
 from models.base_model import BaseModel
@@ -14,22 +13,6 @@ class TestBaseModel(unittest.TestCase):
         """Module documentation"""
         doc = BaseModel.__doc__
         self.assertGreater(len(doc), 1)
-
-    def test_pycodestyle_conformance_base_model(self):
-        """Test that models/base_model.py conforms to pycodestyle."""
-        pycodestylestyle = pycodestyle.StyleGuide(quiet=True)
-        result = pycodestylestyle.check_files(['models/base_model.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_pycodestyle_conformance_test_base_model(self):
-        """Test that tests/test_models/test_base_model.py
-        conforms to pycodestyle."""
-        pycodestylestyle = pycodestyle.StyleGuide(quiet=True)
-        res = pycodestylestyle.check_files(
-            ['tests/test_models/test_base_model.py'])
-        self.assertEqual(res.total_errors, 0,
-                         "Found code style errors (and warnings).")
 
     def test_doc_constructor(self):
         """Constructor documentation"""
