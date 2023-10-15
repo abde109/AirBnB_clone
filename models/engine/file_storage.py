@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """FileStorage class handles storage and
 reload of instances"""
-from json import loads, dumps
-from os.path import exists
+from json import loads, dump
 from models.user import User
 from models.base_model import BaseModel
 from models.amenity import Amenity
@@ -32,8 +31,7 @@ class FileStorage:
         for key, obj in self.__objects.items():
             serialized_objects[key] = obj.to_dict()
         with open(self.__file_path, "w") as f:
-            json_object = dumps(serialized_objects)
-            f.write(json_object)
+            dump(serialized_objects, f)
 
     def reload(self):
         """Reads from output.json to load objects"""
