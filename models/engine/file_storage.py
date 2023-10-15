@@ -24,13 +24,12 @@ class FileStorage:
     def new(self, obj):
         """Creates new object"""
         attr = "{}.{}".format(type(obj).__name__, obj.id)
-        self.__objects[attr] = obj  # store object instance, not dictionary
+        self.__objects[attr] = obj
 
     def save(self):
         """Save objects to output.json"""
         serialized_objects = {}
         for key, obj in self.__objects.items():
-            # Call to_dict() to serialize
 
             serialized_objects[key] = obj.to_dict()
         with open(self.__file_path, "w") as f:
@@ -57,7 +56,6 @@ class FileStorage:
 
         json_decode = loads(data)
 
-        # Deserialize each object and store it in self.__objects
         for key, value in json_decode.items():
             class_name = value['__class__']
             if class_name in current_classes:

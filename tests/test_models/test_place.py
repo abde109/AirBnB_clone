@@ -71,3 +71,7 @@ class TestPlace(unittest.TestCase):
         self.assertIsNotNone(place.id)
         self.assertIsNotNone(place.created_at)
         self.assertIsNotNone(place.updated_at)
+
+
+if __name__ == "__main__":
+    unittest.main()

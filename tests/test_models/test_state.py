@@ -13,8 +13,8 @@ class TestState(unittest.TestCase):
     Review and verify it is an instance of BaseModel"""
 
     def test_create_instance(self):
-        review = State()
-        self.assertIsInstance(review, BaseModel)
+        state = State()
+        self.assertIsInstance(state, BaseModel)
     """create a new instance of State with a name attribute"""
 
     def test_create_instance_with_name_attribute(self):
@@ -56,3 +56,7 @@ class TestState(unittest.TestCase):
         self.assertEqual(
             state.name,
             "This is a very long name that exceeds the maximum allowed length")
+
+
+if __name__ == "__main__":
+    unittest.main()

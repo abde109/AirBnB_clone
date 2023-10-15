@@ -48,3 +48,7 @@ class TestAmenity(unittest.TestCase):
     def test_create_instance_with_empty_name_attribute(self):
         amenity = Amenity(name="")
         self.assertEqual(amenity.name, "")
+
+
+if __name__ == "__main__":
+    unittest.main()

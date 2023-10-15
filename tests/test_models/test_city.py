@@ -14,8 +14,8 @@ class TestCity(unittest.TestCase):
     Review and verify it is an instance of BaseModel"""
 
     def test_create_instance(self):
-        review = City()
-        self.assertIsInstance(review, BaseModel)
+        city = City()
+        self.assertIsInstance(city, BaseModel)
     """create a new City instance with state_id and name attributes"""
 
     def test_create_city_with_state_id_and_name(self):
@@ -57,3 +57,7 @@ class TestCity(unittest.TestCase):
         city = City(state_id=None, name=None)
         self.assertIsNone(city.state_id)
         self.assertIsNone(city.name)
+
+
+if __name__ == "__main__":
+    unittest.main()
