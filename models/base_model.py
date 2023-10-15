@@ -24,10 +24,10 @@ class BaseModel:
 
     def __str__(self):
         """Return the string representation of the BaseModel."""
-        classname = "[{}] ".format(self.__class__.__name__)
-        id = "({}) ".format(self.id)
-        dict = "{}".format(self.__dict__)
-        return classname + id + dict
+        class_name = self.__class__.__name__
+        obj_id = self.id
+        relevant_dict = {key: self.__dict__[key] for key in ['first_name', 'id', 'created_at', 'updated_at'] if key in self.__dict__}
+        return "[{}] ({}) {}".format(class_name, obj_id, relevant_dict)
 
     def save(self):
         """Update the updated_at attribute with the current datetime."""

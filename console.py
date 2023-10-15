@@ -67,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
             id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
 
-                print(instances.all()[identifier])
+                print(str(instances.all()[identifier]))
                 return
         print("** no instance found **")
 
