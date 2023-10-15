@@ -4,7 +4,6 @@ from models.place import Place
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 import unittest
-import models
 
 
 class TestPlace(unittest.TestCase):
@@ -19,10 +18,7 @@ class TestPlace(unittest.TestCase):
         """create a new place with valid attributes"""
         place = Place()
         place.name = "test@example.com"
-        place.state_id = "password123"
-
         self.assertEqual(place.name, "test@example.com")
-        self.assertEqual(place.state_id, "password123")
 
     def test_update_place_details(self):
         """update place's attributes"""

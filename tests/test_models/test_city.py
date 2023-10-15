@@ -2,9 +2,6 @@
 """Module for test City class"""
 from models.base_model import BaseModel
 from models.city import City
-import models
-
-
 import unittest
 
 
