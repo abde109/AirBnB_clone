@@ -198,6 +198,10 @@ class HBNBCommand(cmd.Cmd):
             elif action == "destroy":
                 action_args = action_args.strip('"')
                 self.do_destroy(f"{class_name} {action_args}")
+            elif action == "update":
+                id, attribute_name, attribute_value = [arg.strip(' "')
+                                                    for arg in action_args.split(',')]
+                self.do_update(f"{class_name} {id} {attribute_name} {attribute_value}")
 
     def do_count(self, class_name):
         """Count the number of instances of a given class."""
