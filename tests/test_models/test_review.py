@@ -16,9 +16,9 @@ class TestReview(unittest.TestCase):
     def test_create_review_with_valid_details(self):
         """create a new review with valid attributes"""
         review = Review()
-        review.name = "test@example.com"
+        review.text = "test@example.com"
 
-        self.assertEqual(review.name, "test@example.com")
+        self.assertEqual(review.text, "test@example.com")
 
     def test_update_review_details(self):
         """update review's attributes"""
@@ -48,7 +48,7 @@ class TestReview(unittest.TestCase):
     def test_create_review_with_empty_details(self):
         """create a new review with empty attributes """
         review = Review()
-        self.assertEqual(review.name, "")
+        self.assertEqual(review.text, "")
 
 
 if __name__ == "__main__":
