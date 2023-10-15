@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""FileStorage class handles the serialization
-and deserialization of instances"""
+"""FileStorage class handles storage and
+reload of instances"""
 from json import loads, dumps
 from os.path import exists
 from models.user import User
@@ -30,7 +30,6 @@ class FileStorage:
         """Save objects to output.json"""
         serialized_objects = {}
         for key, obj in self.__objects.items():
-
             serialized_objects[key] = obj.to_dict()
         with open(self.__file_path, "w") as f:
             json_object = dumps(serialized_objects)
@@ -47,15 +46,12 @@ class FileStorage:
             'Review': Review,
             'State': State
         }
-
         if not exists(self.__file_path):
             with open(self.__file_path, "w") as g:
                 g.write("{}")
         with open(self.__file_path, "r") as f:
             data = f.read()
-
         json_decode = loads(data)
-
         for key, value in json_decode.items():
             class_name = value['__class__']
             if class_name in current_classes:

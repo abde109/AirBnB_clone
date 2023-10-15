@@ -70,9 +70,7 @@ class TestFileStorage_methods(unittest.TestCase):
 
     def test_reload(self):
         bm = BaseModel()
-
         models.storage.new(bm)
-
         models.storage.save()
         models.storage.reload()
         objs = models.storage._FileStorage__objects
