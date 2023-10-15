@@ -189,6 +189,32 @@ class HBNBCommand(cmd.Cmd):
             if action == "all()":
                 self.do_all(class_name)
 
+    def default(self, line):
+        """Method called on an input line when the command prefix is not recognized."""
+        args = line.split('.')
+        if len(args) != 2:
+            print("** Unknown syntax: {}".format(line))
+            return
+
+        class_name, action = args
+        if class_name in self.models.keys():
+            if action == "all()":
+                self.do_all(class_name)
+            elif action == "count()":
+                self.do_count(class_name)
+
+    def do_count(self, class_name):
+        """Count the number of instances of a given class."""
+        instances = FileStorage()
+        instances.reload()
+
+        count = 0
+        for identifier in list(instances.all()):
+            id_split = identifier.split('.')
+            if id_split[0] == class_name:
+                count += 1
+        print(count)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
