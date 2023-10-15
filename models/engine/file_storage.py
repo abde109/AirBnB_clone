@@ -9,6 +9,7 @@ from models.city import City
 from models.review import Review
 from models.state import State
 from models.place import Place
+from os.path import exists
 
 
 class FileStorage:
@@ -44,7 +45,7 @@ class FileStorage:
             'Review': Review,
             'State': State
         }
-        try:
+        if (exists(self.__file_path)):
             with open(self.__file_path, "r") as f:
                 data = f.read()
             json_decode = loads(data)
@@ -52,5 +53,3 @@ class FileStorage:
                 class_name = value['__class__']
                 if class_name in current_classes:
                     self.__objects[key] = current_classes[class_name](**value)
-        except FileNotFoundError:
-            return
