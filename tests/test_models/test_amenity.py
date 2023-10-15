@@ -7,15 +7,14 @@ import unittest
 
 class TestAmenity(unittest.TestCase):
 
-    """create a new instance of amenity
-    and verify it is an instance of BaseModel"""
-
     def test_create_instance(self):
+        """create a new instance of amenity
+        and verify it is an instance of BaseModel"""
         amenity = Amenity()
         self.assertIsInstance(amenity, BaseModel)
-    """create a new amenity with valid attributes"""
 
     def test_create_amenity_with_valid_details(self):
+        """create a new amenity with valid attributes"""
         amenity = Amenity()
         amenity.name = "test@example.com"
         amenity.state_id = "password123"
@@ -23,9 +22,8 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(amenity.name, "test@example.com")
         self.assertEqual(amenity.state_id, "password123")
 
-    """update amenity's attributes"""
-
     def test_update_amenity_details(self):
+        """update amenity's attributes"""
         amenity = Amenity()
         amenity.email = "test@example.com"
         amenity.password = "password123"
@@ -40,9 +38,8 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(amenity.first_name, "Jane")
         self.assertEqual(amenity.last_name, "Smith")
 
-    """save amenity's data to storage"""
-
     def test_save_amenity_data_to_storage(self):
+        """save amenity's data to storage"""
         amenity = Amenity()
         amenity.email = "test@example.com"
         amenity.password = "password123"
@@ -50,9 +47,8 @@ class TestAmenity(unittest.TestCase):
         amenity.last_name = "Doe"
         amenity.save()
 
-    """create a new amenity with empty attributes """
-
     def test_create_amenity_with_empty_details(self):
+        """create a new amenity with empty attributes """
         amenity = Amenity()
         self.assertEqual(amenity.name, "")
 

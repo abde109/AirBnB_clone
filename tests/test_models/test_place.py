@@ -8,16 +8,15 @@ import models
 
 
 class TestPlace(unittest.TestCase):
-    """create a new instance of place
-    and verify it is an instance of BaseModel"""
 
     def test_create_instance(self):
+        """create a new instance of place
+        and verify it is an instance of BaseModel"""
         place = Place()
         self.assertIsInstance(place, BaseModel)
 
-    """create a new place with valid attributes"""
-
     def test_create_place_with_valid_details(self):
+        """create a new place with valid attributes"""
         place = Place()
         place.name = "test@example.com"
         place.state_id = "password123"
@@ -25,9 +24,8 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.name, "test@example.com")
         self.assertEqual(place.state_id, "password123")
 
-    """update place's attributes"""
-
     def test_update_place_details(self):
+        """update place's attributes"""
         place = Place()
         place.email = "test@example.com"
         place.password = "password123"
@@ -42,9 +40,8 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.first_name, "Jane")
         self.assertEqual(place.last_name, "Smith")
 
-    """save place's data to storage"""
-
     def test_save_place_data_to_storage(self):
+        """save place's data to storage"""
         place = Place()
         place.email = "test@example.com"
         place.password = "password123"
@@ -52,9 +49,8 @@ class TestPlace(unittest.TestCase):
         place.last_name = "Doe"
         place.save()
 
-    """create a new place with empty attributes """
-
     def test_create_place_with_empty_details(self):
+        """create a new place with empty attributes """
         place = Place()
         self.assertEqual(place.name, "")
         self.assertEqual(place.amenity_ids, "")

@@ -7,23 +7,21 @@ from models.state import State
 
 class TestState(unittest.TestCase):
 
-    """create a new instance of state
-    and verify it is an instance of BaseModel"""
-
     def test_create_instance(self):
+        """create a new instance of state
+        and verify it is an instance of BaseModel"""
         state = State()
         self.assertIsInstance(state, BaseModel)
-    """create a new state with valid attributes"""
 
     def test_create_state_with_valid_details(self):
+        """create a new state with valid attributes"""
         state = State()
         state.name = "test@example.com"
 
         self.assertEqual(state.name, "test@example.com")
 
-    """update state's attributes"""
-
     def test_update_state_details(self):
+        """update state's attributes"""
         state = State()
         state.email = "test@example.com"
         state.password = "password123"
@@ -38,9 +36,8 @@ class TestState(unittest.TestCase):
         self.assertEqual(state.first_name, "Jane")
         self.assertEqual(state.last_name, "Smith")
 
-    """save state's data to storage"""
-
     def test_save_state_data_to_storage(self):
+        """save state's data to storage"""
         state = State()
         state.email = "test@example.com"
         state.password = "password123"
@@ -48,15 +45,13 @@ class TestState(unittest.TestCase):
         state.last_name = "Doe"
         state.save()
 
-    """create a new state with empty attributes """
-
     def test_create_state_with_empty_details(self):
+        """create a new state with empty attributes """
         state = State()
         self.assertEqual(state.name, "")
 
-    """update state attributes """
-
     def test_update_state_name(self):
+        """update state attributes """
         state = State()
         state.name = "test@example.com"
         state.name = "new@example.com"

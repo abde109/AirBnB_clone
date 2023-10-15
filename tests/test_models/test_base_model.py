@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Module for test BaseModel class"""
+import time
 import unittest
 import datetime
 
@@ -104,6 +105,19 @@ class TestBaseModel(unittest.TestCase):
         b3.save()
         with open("file.json", 'r') as f:
             self.assertIn(b3.id, f.read())
+        # Test updating the updated_at attribute
+
+    def test_update_updated_at(self):
+        """Test updating the updated_at attribute"""
+        my_model = BaseModel()
+        my_model.save()
+        old_updated_at = my_model.updated_at
+        time.sleep(1)
+        my_model.name = "ALX"
+        my_model.my_number = 89
+        my_model.save()
+        new_updated_at = my_model.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
 
 
 if __name__ == '__main__':

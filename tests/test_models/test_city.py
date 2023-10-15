@@ -9,15 +9,15 @@ import unittest
 
 
 class TestCity(unittest.TestCase):
-    """create a new instance of City
-    and verify it is an instance of BaseModel"""
 
     def test_create_instance(self):
+        """create a new instance of City
+        and verify it is an instance of BaseModel"""
         city = City()
         self.assertIsInstance(city, BaseModel)
-    """create a new city with valid attributes"""
 
     def test_create_city_with_valid_details(self):
+        """create a new city with valid attributes"""
         city = City()
         city.name = "test@example.com"
         city.state_id = "password123"
@@ -25,9 +25,8 @@ class TestCity(unittest.TestCase):
         self.assertEqual(city.name, "test@example.com")
         self.assertEqual(city.state_id, "password123")
 
-    """update city's attributes"""
-
     def test_update_city_details(self):
+        """update city's attributes"""
         city = City()
         city.email = "test@example.com"
         city.password = "password123"
@@ -42,9 +41,8 @@ class TestCity(unittest.TestCase):
         self.assertEqual(city.first_name, "Jane")
         self.assertEqual(city.last_name, "Smith")
 
-    """save city's data to storage"""
-
     def test_save_city_data_to_storage(self):
+        """save city's data to storage"""
         city = City()
         city.email = "test@example.com"
         city.password = "password123"
@@ -52,9 +50,8 @@ class TestCity(unittest.TestCase):
         city.last_name = "Doe"
         city.save()
 
-    """create a new city with empty attributes """
-
     def test_create_city_with_empty_details(self):
+        """create a new city with empty attributes """
         city = City()
         self.assertEqual(city.name, "")
         self.assertEqual(city.state_id, "")

@@ -7,16 +7,15 @@ import unittest
 
 class TestUser(unittest.TestCase):
 
-    """create a new instance of Review
-    and verify it is an instance of BaseModel"""
-
     def test_create_instance(self):
+        """create a new instance of Review
+        and verify it is an instance of BaseModel"""
         review = User()
         self.assertIsInstance(review, BaseModel)
-    """create a new user with valid email,
-    password, first_name and last_name"""
 
     def test_create_user_with_valid_details(self):
+        """create a new user with valid email,
+        password, first_name and last_name"""
         user = User()
         user.email = "test@example.com"
         user.password = "password123"
@@ -27,9 +26,8 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.first_name, "John")
         self.assertEqual(user.last_name, "Doe")
 
-    """update user's email, password, first_name and last_name"""
-
     def test_update_user_details(self):
+        """update user's email, password, first_name and last_name"""
         user = User()
         user.email = "test@example.com"
         user.password = "password123"
@@ -44,9 +42,8 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.first_name, "Jane")
         self.assertEqual(user.last_name, "Smith")
 
-    """save user's data to storage"""
-
     def test_save_user_data_to_storage(self):
+        """save user's data to storage"""
         user = User()
         user.email = "test@example.com"
         user.password = "password123"
@@ -54,10 +51,9 @@ class TestUser(unittest.TestCase):
         user.last_name = "Doe"
         user.save()
 
-    """create a new user with empty email,
-    password, first_name and last_name"""
-
     def test_create_user_with_empty_details(self):
+        """create a new user with empty email,
+        password, first_name and last_name"""
         user = User()
         self.assertEqual(user.email, "")
         self.assertEqual(user.password, "")

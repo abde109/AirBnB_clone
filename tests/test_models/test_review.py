@@ -7,23 +7,21 @@ from models.review import Review
 
 class TestReview(unittest.TestCase):
 
-    """create a new instance of review
-    and verify it is an instance of BaseModel"""
-
     def test_create_instance(self):
+        """create a new instance of review
+        and verify it is an instance of BaseModel"""
         review = Review()
         self.assertIsInstance(review, BaseModel)
-    """create a new review with valid attributes"""
 
     def test_create_review_with_valid_details(self):
+        """create a new review with valid attributes"""
         review = Review()
         review.name = "test@example.com"
 
         self.assertEqual(review.name, "test@example.com")
 
-    """update review's attributes"""
-
     def test_update_review_details(self):
+        """update review's attributes"""
         review = Review()
         review.email = "test@example.com"
         review.password = "password123"
@@ -38,9 +36,8 @@ class TestReview(unittest.TestCase):
         self.assertEqual(review.first_name, "Jane")
         self.assertEqual(review.last_name, "Smith")
 
-    """save review's data to storage"""
-
     def test_save_review_data_to_storage(self):
+        """save review's data to storage"""
         review = Review()
         review.email = "test@example.com"
         review.password = "password123"
@@ -48,9 +45,8 @@ class TestReview(unittest.TestCase):
         review.last_name = "Doe"
         review.save()
 
-    """create a new review with empty attributes """
-
     def test_create_review_with_empty_details(self):
+        """create a new review with empty attributes """
         review = Review()
         self.assertEqual(review.name, "")
 
