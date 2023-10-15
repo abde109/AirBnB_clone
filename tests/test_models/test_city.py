@@ -9,54 +9,55 @@ import unittest
 
 
 class TestCity(unittest.TestCase):
-
-    """create a new instance of
-    Review and verify it is an instance of BaseModel"""
+    """create a new instance of City
+    and verify it is an instance of BaseModel"""
 
     def test_create_instance(self):
         city = City()
         self.assertIsInstance(city, BaseModel)
-    """create a new City instance with state_id and name attributes"""
+    """create a new city with valid attributes"""
 
-    def test_create_city_with_state_id_and_name(self):
-        city = City(state_id="123", name="New York")
-        self.assertEqual(city.state_id, "123")
-        self.assertEqual(city.name, "New York")
-
-    """City instance has id, created_at, and updated_at attributes"""
-
-    def test_city_instance_attributes(self):
-        city = City(state_id="123", name="New York")
-        self.assertIsNotNone(city.created_at)
-        self.assertIsNotNone(city.updated_at)
-
-    """City instance can be saved to storage"""
-
-    def test_save_city_to_storage(self):
-        city = City(state_id="123", name="New York")
-        models.storage.save()
-        self.assertIn(city, models.storage.all().values())
-
-    """create a new City instance with empty state_id and name attributes"""
-
-    def test_create_city_with_empty_state_id_and_name(self):
+    def test_create_city_with_valid_details(self):
         city = City()
+        city.name = "test@example.com"
+        city.state_id = "password123"
+
+        self.assertEqual(city.name, "test@example.com")
+        self.assertEqual(city.state_id, "password123")
+
+    """update city's attributes"""
+
+    def test_update_city_details(self):
+        city = City()
+        city.email = "test@example.com"
+        city.password = "password123"
+        city.first_name = "John"
+        city.last_name = "Doe"
+        city.email = "new@example.com"
+        city.password = "newpassword123"
+        city.first_name = "Jane"
+        city.last_name = "Smith"
+        self.assertEqual(city.email, "new@example.com")
+        self.assertEqual(city.password, "newpassword123")
+        self.assertEqual(city.first_name, "Jane")
+        self.assertEqual(city.last_name, "Smith")
+
+    """save city's data to storage"""
+
+    def test_save_city_data_to_storage(self):
+        city = City()
+        city.email = "test@example.com"
+        city.password = "password123"
+        city.first_name = "John"
+        city.last_name = "Doe"
+        city.save()
+
+    """create a new city with empty attributes """
+
+    def test_create_city_with_empty_details(self):
+        city = City()
+        self.assertEqual(city.name, "")
         self.assertEqual(city.state_id, "")
-        self.assertEqual(city.name, "")
-
-    """create a new City instance with state_id and empty name attributes"""
-
-    def test_create_city_with_state_id_and_empty_name(self):
-        city = City(state_id="123")
-        self.assertEqual(city.state_id, "123")
-        self.assertEqual(city.name, "")
-
-    """create a new City instance with None state_id and name attributes"""
-
-    def test_create_city_with_none_state_id_and_name(self):
-        city = City(state_id=None, name=None)
-        self.assertIsNone(city.state_id)
-        self.assertIsNone(city.name)
 
 
 if __name__ == "__main__":

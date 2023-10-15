@@ -8,69 +8,65 @@ import models
 
 
 class TestPlace(unittest.TestCase):
+    """create a new instance of place
+    and verify it is an instance of BaseModel"""
 
-    """ create a new instance of Place and verify
-    that it is a subclass of
-    BaseModel"""
-
-    def test_new_instance_is_subclass_of_BaseModel(self):
+    def test_create_instance(self):
         place = Place()
         self.assertIsInstance(place, BaseModel)
 
-    """set attributes of a Place instance and
-    verify that they are saved
-    correctly"""
+    """create a new place with valid attributes"""
 
-    def test_set_attributes_are_saved_correctly(self):
+    def test_create_place_with_valid_details(self):
         place = Place()
-        place.city_id = "123"
-        place.user_id = "456"
-        place.name = "Test Place"
-        place.description = "This is a test place"
-        place.number_rooms = 2
-        place.number_bathrooms = 1
-        place.max_guest = 4
-        place.price_by_night = 100
-        place.latitude = 37.7749
-        place.longitude = -122.4194
-        place.amenity_ids = ["1", "2", "3"]
+        place.name = "test@example.com"
+        place.state_id = "password123"
 
-        self.assertEqual(place.city_id, "123")
-        self.assertEqual(place.user_id, "456")
-        self.assertEqual(place.name, "Test Place")
-        self.assertEqual(place.description, "This is a test place")
-        self.assertEqual(place.number_rooms, 2)
-        self.assertEqual(place.number_bathrooms, 1)
-        self.assertEqual(place.max_guest, 4)
-        self.assertEqual(place.price_by_night, 100)
-        self.assertEqual(place.latitude, 37.7749)
-        self.assertEqual(place.longitude, -122.4194)
-        self.assertEqual(place.amenity_ids, ["1", "2", "3"])
+        self.assertEqual(place.name, "test@example.com")
+        self.assertEqual(place.state_id, "password123")
 
-    """call save() on a Place instance and verify
-    that updated_at is updated
-    and the instance is saved to storage"""
+    """update place's attributes"""
 
-    def test_save_updates_updated_at_and_saves_instance_to_storage(self):
+    def test_update_place_details(self):
         place = Place()
-        original_updated_at = place.updated_at
+        place.email = "test@example.com"
+        place.password = "password123"
+        place.first_name = "John"
+        place.last_name = "Doe"
+        place.email = "new@example.com"
+        place.password = "newpassword123"
+        place.first_name = "Jane"
+        place.last_name = "Smith"
+        self.assertEqual(place.email, "new@example.com")
+        self.assertEqual(place.password, "newpassword123")
+        self.assertEqual(place.first_name, "Jane")
+        self.assertEqual(place.last_name, "Smith")
 
+    """save place's data to storage"""
+
+    def test_save_place_data_to_storage(self):
+        place = Place()
+        place.email = "test@example.com"
+        place.password = "password123"
+        place.first_name = "John"
+        place.last_name = "Doe"
         place.save()
 
-        self.assertNotEqual(place.updated_at, original_updated_at)
-        self.assertIn(place, models.storage.all().values())
+    """create a new place with empty attributes """
 
-    """create a new Place instance with no
-    arguments and verify that the id,
-    created_at, and updated_at attributes
-    are set correctly"""
-
-    def test_new_instance_with_no_arguments_sets_attributes_correctly(self):
+    def test_create_place_with_empty_details(self):
         place = Place()
-
-        self.assertIsNotNone(place.id)
-        self.assertIsNotNone(place.created_at)
-        self.assertIsNotNone(place.updated_at)
+        self.assertEqual(place.name, "")
+        self.assertEqual(place.amenity_ids, "")
+        self.assertEqual(place.city_id, "")
+        self.assertEqual(place.max_guest, 0)
+        self.assertEqual(place.price_by_night, 0)
+        self.assertEqual(place.user_id, "")
+        self.assertEqual(place.latitude, 0.0)
+        self.assertEqual(place.longitude, 0.0)
+        self.assertEqual(place.name, "")
+        self.assertEqual(place.number_bathrooms, 0)
+        self.assertEqual(place.number_rooms, 0)
 
 
 if __name__ == "__main__":

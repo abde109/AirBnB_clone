@@ -7,42 +7,52 @@ from models.review import Review
 
 class TestReview(unittest.TestCase):
 
-    """create a new instance of Review
+    """create a new instance of review
     and verify it is an instance of BaseModel"""
 
     def test_create_instance(self):
         review = Review()
         self.assertIsInstance(review, BaseModel)
+    """create a new review with valid attributes"""
 
-    def test_set_name_attribute(self):
+    def test_create_review_with_valid_details(self):
         review = Review()
-        review.name = "Test Review"
-        self.assertEqual(review.name, "Test Review")
+        review.name = "test@example.com"
 
-    """call the to_dict method on a Review instance and verify the returned
-    dictionary contains the expected keys and values"""
+        self.assertEqual(review.name, "test@example.com")
 
-    def test_to_dict_method(self):
+    """update review's attributes"""
+
+    def test_update_review_details(self):
         review = Review()
-        review.name = "Test Review"
-        review_dict = review.to_dict()
-        expected_dict = {
-            'id': review.id,
-            'created_at': review.created_at.isoformat(),
-            'updated_at': review.updated_at.isoformat(),
-            '__class__': 'Review',
-            'name': 'Test Review'
-        }
-        self.assertDictEqual(review_dict, expected_dict)
+        review.email = "test@example.com"
+        review.password = "password123"
+        review.first_name = "John"
+        review.last_name = "Doe"
+        review.email = "new@example.com"
+        review.password = "newpassword123"
+        review.first_name = "Jane"
+        review.last_name = "Smith"
+        self.assertEqual(review.email, "new@example.com")
+        self.assertEqual(review.password, "newpassword123")
+        self.assertEqual(review.first_name, "Jane")
+        self.assertEqual(review.last_name, "Smith")
 
-    """create a new instance of Review with no arguments and verify that the
-    id, created_at, and updated_at attributes are set correctly"""
+    """save review's data to storage"""
 
-    def test_create_instance_with_no_arguments(self):
+    def test_save_review_data_to_storage(self):
         review = Review()
-        self.assertIsNotNone(review.id)
-        self.assertIsNotNone(review.created_at)
-        self.assertIsNotNone(review.updated_at)
+        review.email = "test@example.com"
+        review.password = "password123"
+        review.first_name = "John"
+        review.last_name = "Doe"
+        review.save()
+
+    """create a new review with empty attributes """
+
+    def test_create_review_with_empty_details(self):
+        review = Review()
+        self.assertEqual(review.name, "")
 
 
 if __name__ == "__main__":

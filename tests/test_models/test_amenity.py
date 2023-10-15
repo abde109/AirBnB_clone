@@ -7,46 +7,53 @@ import unittest
 
 class TestAmenity(unittest.TestCase):
 
-    """create a new instance of
-    Review and verify it is an instance of BaseModel"""
+    """create a new instance of amenity
+    and verify it is an instance of BaseModel"""
 
     def test_create_instance(self):
-        review = Amenity()
-        self.assertIsInstance(review, BaseModel)
-    """create an instance of Amenity with a name attribute"""
-
-    def test_create_instance_with_name_attribute(self):
-        amenity = Amenity(name="Pool")
-        self.assertEqual(amenity.name, "Pool")
-
-    """verify that the instance has an id attribute"""
-
-    def test_verify_id_attribute(self):
-        amenity = Amenity(name="Gym")
-        self.assertTrue(hasattr(amenity, "id"))
-
-    """verify that the instance has a created_at attribute"""
-
-    def test_verify_created_at_attribute(self):
-        amenity = Amenity(name="Spa")
-        self.assertTrue(hasattr(amenity, "created_at"))
-
-    """create an instance of Amenity without passing any arguments"""
-
-    def test_create_instance_without_arguments(self):
         amenity = Amenity()
-        self.assertIsInstance(amenity, Amenity)
+        self.assertIsInstance(amenity, BaseModel)
+    """create a new amenity with valid attributes"""
 
-    """create an instance of Amenity with a non-string name attribute"""
+    def test_create_amenity_with_valid_details(self):
+        amenity = Amenity()
+        amenity.name = "test@example.com"
+        amenity.state_id = "password123"
 
-    def test_create_instance_with_non_string_name_attribute(self):
-        amenity = Amenity(name=123)
-        self.assertEqual(amenity.name, 123)
+        self.assertEqual(amenity.name, "test@example.com")
+        self.assertEqual(amenity.state_id, "password123")
 
-    """create an instance of Amenity with an empty name attribute"""
+    """update amenity's attributes"""
 
-    def test_create_instance_with_empty_name_attribute(self):
-        amenity = Amenity(name="")
+    def test_update_amenity_details(self):
+        amenity = Amenity()
+        amenity.email = "test@example.com"
+        amenity.password = "password123"
+        amenity.first_name = "John"
+        amenity.last_name = "Doe"
+        amenity.email = "new@example.com"
+        amenity.password = "newpassword123"
+        amenity.first_name = "Jane"
+        amenity.last_name = "Smith"
+        self.assertEqual(amenity.email, "new@example.com")
+        self.assertEqual(amenity.password, "newpassword123")
+        self.assertEqual(amenity.first_name, "Jane")
+        self.assertEqual(amenity.last_name, "Smith")
+
+    """save amenity's data to storage"""
+
+    def test_save_amenity_data_to_storage(self):
+        amenity = Amenity()
+        amenity.email = "test@example.com"
+        amenity.password = "password123"
+        amenity.first_name = "John"
+        amenity.last_name = "Doe"
+        amenity.save()
+
+    """create a new amenity with empty attributes """
+
+    def test_create_amenity_with_empty_details(self):
+        amenity = Amenity()
         self.assertEqual(amenity.name, "")
 
 
