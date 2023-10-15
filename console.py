@@ -196,12 +196,18 @@ class HBNBCommand(cmd.Cmd):
             print("** Unknown syntax: {}".format(line))
             return
 
-        class_name, action = args
+        class_name, action = args[0], args[1].split('(')[0]
+        action_args = args[1][len(action) + 1:-1]
+
         if class_name in self.models.keys():
-            if action == "all()":
+            if action == "all":
                 self.do_all(class_name)
-            elif action == "count()":
+            elif action == "count":
                 self.do_count(class_name)
+            elif action == "show":
+                action_args = action_args.strip('"')
+                self.do_show(f"{class_name} {action_args}")
+
 
     def do_count(self, class_name):
         """Count the number of instances of a given class."""
