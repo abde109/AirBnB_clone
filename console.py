@@ -10,6 +10,7 @@ from models.state import State
 from models.place import Place
 from models.engine.file_storage import FileStorage
 from json import dumps
+import ast
 
 
 class HBNBCommand(cmd.Cmd):
@@ -76,12 +77,10 @@ class HBNBCommand(cmd.Cmd):
         if (len(tofind) == 1):
             print("** instance id missing **")
             return
-        for identifier in list(instances.all()):
-            id = identifier.split('.')
-            if (id[0] == tofind[0] and id[1] == tofind[1]):
-
-                print(str(instances.all()[identifier]))
-                return
+        key = tofind[0] + '.' + tofind[1]
+        if key in instances.all():
+            print(instances.all()[key])
+            return
         print("** no instance found **")
 
     def do_destroy(self, args):
@@ -98,10 +97,11 @@ class HBNBCommand(cmd.Cmd):
         if (len(tofind) == 1):
             print("** instance id missing **")
             return
-        for identifier in list(instances.all()):
-            id = identifier.split('.')
+        key = tofind[0] + '.' + tofind[1]
+        if key in instances.all():
+            id = key.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
-                instances.all().pop(identifier)
+                instances.all().pop(key)
                 instances.save()
                 return
         print("** no instance found **")
@@ -175,6 +175,73 @@ class HBNBCommand(cmd.Cmd):
                 instances.save()
                 return
 
+    def default(self, line):
+        """Method called on an input line ."""
+        args = line.split('.')
+        if len(args) != 2:
+            print("** Unknown syntax: {}".format(line))
+            return
+
+        class_name, action = args[0], args[1].split('(')[0]
+        action_args = args[1][len(action) + 1:-1]
+
+        if class_name in self.models.keys():
+            if action == "all":
+                self.do_all(class_name)
+            elif action == "count":
+                self.do_count(class_name)
+            elif action == "show":
+                action_args = action_args.strip('"')
+                self.do_show(f"{class_name} {action_args}")
+            elif action == "destroy":
+                action_args = action_args.strip('"')
+                self.do_destroy(f"{class_name} {action_args}")
+            elif action == "update":
+                try:
+                    if "{" in action_args:
+                        id, update_dict_str = [arg.strip(' "')
+                                               for arg in action_args.split(',', 1)]
+                        # Convert string to dictionary
+                        update_dict = ast.literal_eval(update_dict_str)
+                        self.do_update_dict(f"{class_name} {id} {update_dict}")
+                    else:
+                        id, attribute_name, attribute_value = [arg.strip(' "')
+                                                               for arg in action_args.split(',')]
+                        self.do_update(
+                            f"{class_name} {id} {attribute_name} {attribute_value}")
+                except ValueError:
+                    print("** Invalid syntax **")
+
+    def do_update_dict(self, args):
+        """Updates an instance based on its ID and a dictionary of attributes."""
+        instances = FileStorage()
+        instances.reload()
+        args_list = args.split(' ', 2)
+        class_name, instance_id, update_dict = args_list[0], args_list[1], eval(
+            args_list[2])
+
+        instance_key = f"{class_name}.{instance_id}"
+        if instance_key not in instances.all():
+            print("** no instance found **")
+            return
+
+        instance = instances.all()[instance_key]
+        for key, value in update_dict.items():
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(instance, key, value)
+        instance.save()
+
+    def do_count(self, class_name):
+        """Count the number of instances of a given class."""
+        instances = FileStorage()
+        instances.reload()
+
+        count = 0
+        for identifier in list(instances.all()):
+            id_split = identifier.split('.')
+            if id_split[0] == class_name:
+                count += 1
+        print(count)
         print("** no instance found **")
 
 
