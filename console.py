@@ -77,10 +77,12 @@ class HBNBCommand(cmd.Cmd):
         if (len(tofind) == 1):
             print("** instance id missing **")
             return
-        key = tofind[0] + '.' + tofind[1]
-        if key in instances.all():
-            print(instances.all()[key])
-            return
+        for identifier in list(instances.all()):
+            id = identifier.split('.')
+            if (id[0] == tofind[0] and id[1] == tofind[1]):
+
+                print(str(instances.all()[identifier]))
+                return
         print("** no instance found **")
 
     def do_destroy(self, args):
@@ -97,11 +99,10 @@ class HBNBCommand(cmd.Cmd):
         if (len(tofind) == 1):
             print("** instance id missing **")
             return
-        key = tofind[0] + '.' + tofind[1]
-        if key in instances.all():
-            id = key.split('.')
+        for identifier in list(instances.all()):
+            id = identifier.split('.')
             if (id[0] == tofind[0] and id[1] == tofind[1]):
-                instances.all().pop(key)
+                instances.all().pop(identifier)
                 instances.save()
                 return
         print("** no instance found **")
@@ -175,6 +176,8 @@ class HBNBCommand(cmd.Cmd):
                 instances.save()
                 return
 
+        print("** no instance found **")
+
     def default(self, line):
         """Method called on an input line ."""
         args = line.split('.')
@@ -199,26 +202,33 @@ class HBNBCommand(cmd.Cmd):
             elif action == "update":
                 try:
                     if "{" in action_args:
-                        id, update_dict_str = [arg.strip(' "')
-                                               for arg in action_args.split(',', 1)]
-                        # Convert string to dictionary
+                        id, update_dict_str = [
+                            arg.strip(' "')
+                            for arg in action_args.split(',', 1)
+                        ]
                         update_dict = ast.literal_eval(update_dict_str)
-                        self.do_update_dict(f"{class_name} {id} {update_dict}")
+                        update_command = f"{class_name} {id} {update_dict}"
+                        self.do_update_dict(update_command)
                     else:
-                        id, attribute_name, attribute_value = [arg.strip(' "')
-                                                               for arg in action_args.split(',')]
-                        self.do_update(
-                            f"{class_name} {id} {attribute_name} {attribute_value}")
+                        id, attribute_name, attribute_value = [
+                            arg.strip(' "') for arg in action_args.split(',')
+                        ]
+                        update_command = (
+                            f"{class_name} {id} "
+                            f"{attribute_name} {attribute_value}"
+                        )
+                        self.do_update(update_command)
                 except ValueError:
                     print("** Invalid syntax **")
 
     def do_update_dict(self, args):
-        """Updates an instance based on its ID and a dictionary of attributes."""
+        """Updates an instance based on its ID ."""
         instances = FileStorage()
         instances.reload()
         args_list = args.split(' ', 2)
-        class_name, instance_id, update_dict = args_list[0], args_list[1], eval(
-            args_list[2])
+        class_name = args_list[0]
+        instance_id = args_list[1]
+        update_dict = eval(args_list[2])
 
         instance_key = f"{class_name}.{instance_id}"
         if instance_key not in instances.all():
@@ -242,7 +252,6 @@ class HBNBCommand(cmd.Cmd):
             if id_split[0] == class_name:
                 count += 1
         print(count)
-        print("** no instance found **")
 
 
 if __name__ == '__main__':
