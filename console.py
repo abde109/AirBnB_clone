@@ -77,12 +77,10 @@ class HBNBCommand(cmd.Cmd):
         if (len(tofind) == 1):
             print("** instance id missing **")
             return
-        for identifier in list(instances.all()):
-            id = identifier.split('.')
-            if (id[0] == tofind[0] and id[1] == tofind[1]):
-
-                print(str(instances.all()[identifier]))
-                return
+        key = tofind[0] + '.' + tofind[1]
+        if key in instances.all():
+            print(instances.all()[key])
+            return
         print("** no instance found **")
 
     def do_destroy(self, args):
@@ -99,12 +97,11 @@ class HBNBCommand(cmd.Cmd):
         if (len(tofind) == 1):
             print("** instance id missing **")
             return
-        for identifier in list(instances.all()):
-            id = identifier.split('.')
-            if (id[0] == tofind[0] and id[1] == tofind[1]):
-                instances.all().pop(identifier)
-                instances.save()
-                return
+        key = tofind[0] + '.' + tofind[1]
+        if key in instances.all():
+            instances.all().pop(key)
+            instances.save()
+            return
         print("** no instance found **")
 
     def do_all(self, args):
@@ -157,24 +154,23 @@ class HBNBCommand(cmd.Cmd):
         if (len(tofind) == 3):
             print("** value missing **")
             return
-        for identifier in list(instances.all()):
-            id = identifier.split('.')
+        key = tofind[0] + '.' + tofind[1]
+        if key in instances.all():
             value = tofind[3].strip('"')
 
-            if id[0] == tofind[0] and id[1] == tofind[1]:
-                obj = instances.all()[identifier]
+            obj = instances.all()[key]
 
+            try:
+                value = int(value)
+            except ValueError:
                 try:
-                    value = int(value)
+                    value = float(value)
                 except ValueError:
-                    try:
-                        value = float(value)
-                    except ValueError:
-                        pass
+                    pass
 
-                setattr(obj, tofind[2], value)
-                instances.save()
-                return
+            setattr(obj, tofind[2], value)
+            instances.save()
+            return
 
         print("** no instance found **")
 
