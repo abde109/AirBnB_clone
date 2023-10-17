@@ -45,7 +45,7 @@ class FileStorage:
             'Review': Review,
             'State': State
         }
-        if (exists(self.__file_path)):
+        try:
             with open(self.__file_path, "r") as f:
                 data = f.read()
             json_decode = loads(data)
@@ -53,3 +53,5 @@ class FileStorage:
                 class_name = value['__class__']
                 if class_name in current_classes:
                     self.__objects[key] = current_classes[class_name](**value)
+        except FileNotFoundError:
+            pass
