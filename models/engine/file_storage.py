@@ -10,6 +10,15 @@ from models.review import Review
 from models.state import State
 from models.place import Place
 from os.path import exists
+current_classes = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'Amenity': Amenity,
+    'City': City,
+    'Place': Place,
+    'Review': Review,
+    'State': State
+}
 
 
 class FileStorage:
@@ -36,15 +45,7 @@ class FileStorage:
 
     def reload(self):
         """Reads from output.json to load objects"""
-        current_classes = {
-            'BaseModel': BaseModel,
-            'User': User,
-            'Amenity': Amenity,
-            'City': City,
-            'Place': Place,
-            'Review': Review,
-            'State': State
-        }
+
         try:
             with open(self.__file_path, "r") as f:
                 data = f.read()
