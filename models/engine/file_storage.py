@@ -10,6 +10,7 @@ from models.review import Review
 from models.state import State
 from models.place import Place
 from os.path import exists
+import os
 current_classes = {
     'BaseModel': BaseModel,
     'User': User,
@@ -45,14 +46,15 @@ class FileStorage:
 
     def reload(self):
         """Reads from output.json to load objects"""
-
         try:
             with open(self.__file_path, "r") as f:
                 data = f.read()
             json_decode = loads(data)
             for key, value in json_decode.items():
-                class_name = value['__class__']
-                if class_name in current_classes:
-                    self.__objects[key] = current_classes[class_name](**value)
+                if '__class__' in value:
+                    class_name = value['__class__']
+                    if class_name in current_classes:
+                        self.__objects[key] = current_classes[class_name](
+                            **value)
         except FileNotFoundError:
             pass
